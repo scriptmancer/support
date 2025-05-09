@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Nazim\Support\Hash;
+use Scriptmancer\Support\Hash;
 
 echo "=== Hash Class Examples ===\n\n";
 

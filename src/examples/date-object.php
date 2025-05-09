@@ -2,8 +2,8 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Nazim\Support\Date;
-use Nazim\Support\DateObject;
+use Scriptmancer\Support\Date;
+use Scriptmancer\Support\DateObject;
 
 // Different ways to create date objects
 echo "=== Creating Date Objects ===\n";

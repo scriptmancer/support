@@ -1,6 +1,6 @@
 <?php
 
-namespace Nazim\Support\Debug;
+namespace Scriptmancer\Debug;
 
 use Kint\Kint;
 

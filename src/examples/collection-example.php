@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Nazim\Support\Collections\Collection;
+use Scriptmancer\Collections\Collection;
 
 // Basic collection creation
 echo "=== Basic Collection Usage ===\n";

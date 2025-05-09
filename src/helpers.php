@@ -1,15 +1,15 @@
 <?php
 
-use Nazim\Support\Debug\Dumper;
-use Nazim\Support\DateObject;
-use Nazim\Support\Stringable;
-use Nazim\Support\Number;
-use Nazim\Support\Numeric;
-use Nazim\Support\Url;
-use Nazim\Support\Validation;
-use Nazim\Support\Domain;
-use Nazim\Support\Html;
-use Nazim\Support\File;
+use Scriptmancer\Debug\Dumper;
+use Scriptmancer\Support\DateObject;
+use Scriptmancer\Support\Stringable;
+use Scriptmancer\Support\Number;
+use Scriptmancer\Support\Numeric;
+use Scriptmancer\Support\Url;
+use Scriptmancer\Support\Validation;
+use Scriptmancer\Support\Domain;
+use Scriptmancer\Support\Html;
+use Scriptmancer\Support\File;
 
 if (!function_exists('dd')) {
     /**
@@ -48,11 +48,11 @@ if (!function_exists('collect')) {
      * Create a collection from the given value.
      *
      * @param  mixed  $value
-     * @return \Nazim\Support\Collections\Collection
+     * @return \Scriptmancer\Collections\Collection
      */
     function collect($value = null)
     {
-        return new \Nazim\Support\Collections\Collection($value);
+        return new \Scriptmancer\Collections\Collection($value);
     }
 }
 
@@ -61,7 +61,7 @@ if (!function_exists('date_obj')) {
      * Create a new DateObject instance.
      *
      * @param  mixed  $date
-     * @return \Nazim\Support\DateObject
+     * @return \Scriptmancer\Support\DateObject
      */
     function date_obj($date = null)
     {
@@ -74,7 +74,7 @@ if (!function_exists('str')) {
      * Create a new Stringable instance.
      *
      * @param  string  $string
-     * @return \Nazim\Support\Stringable
+     * @return \Scriptmancer\Support\Stringable
      */
     function str(string $string = '')
     {
@@ -87,7 +87,7 @@ if (!function_exists('number')) {
      * Create a new Number instance.
      *
      * @param  string  $locale
-     * @return \Nazim\Support\Number
+     * @return \Scriptmancer\Support\Number
      */
     function number(string $locale = 'tr_TR')
     {
@@ -101,7 +101,7 @@ if (!function_exists('numeric')) {
      *
      * @param  float|int  $value
      * @param  string  $locale
-     * @return \Nazim\Support\Numeric
+     * @return \Scriptmancer\Support\Numeric
      */
     function numeric($value = 0, string $locale = 'tr_TR')
     {
@@ -146,7 +146,7 @@ if (!function_exists('domain')) {
      * Create a new Domain instance.
      *
      * @param  string  $value
-     * @return \Nazim\Support\Domain
+     * @return \Scriptmancer\Support\Domain
      */
     function domain(string $value = '')
     {
@@ -187,7 +187,7 @@ if (!function_exists('collection_debug')) {
      * Get a debugger for the given collection.
      *
      * @param  mixed  $items
-     * @return \Nazim\Support\Debug\CollectionDebugger
+     * @return \Scriptmancer\Debug\CollectionDebugger
      */
     function collection_debug($items)
     {
@@ -205,7 +205,7 @@ if (!function_exists('hash_value')) {
      */
     function hash_value(string $value, array $options = [])
     {
-        return \Nazim\Support\Hash::make($value, $options);
+        return \Scriptmancer\Support\Hash::make($value, $options);
     }
 }
 
@@ -214,10 +214,10 @@ if (!function_exists('pipeline')) {
      * Create a new Pipeline instance.
      *
      * @param  mixed  $passable
-     * @return \Nazim\Support\Pipeline
+     * @return \Scriptmancer\Support\Pipeline
      */
     function pipeline($passable = null)
     {
-        return new \Nazim\Support\Pipeline($passable);
+        return new \Scriptmancer\Support\Pipeline($passable);
     }
 } 

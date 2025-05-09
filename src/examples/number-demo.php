@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Nazim\Support\Number;
+use Scriptmancer\Support\Number;
 
 // Different ways to create Number objects
 echo "=== Creating Number Objects ===\n";

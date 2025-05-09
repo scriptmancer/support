@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Nazim\Support\Pipeline;
+use Scriptmancer\Support\Pipeline;
 
 echo "=== Pipeline Pattern Examples ===\n\n";
 

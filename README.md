@@ -20,7 +20,7 @@ Support package for the Nazim framework.
 ## Installation
 
 ```bash
-composer require nazim/support
+composer require scriptmancer/support
 ```
 
 ## Usage
@@ -172,6 +172,8 @@ Run the included examples to see these features in action:
 ```bash
 php run-collection-example.php
 php run-collection-debug-example.php
+php run-array-example.php
+php run-color-example.php
 ```
 
 ### Hash & Cryptography
@@ -179,7 +181,7 @@ php run-collection-debug-example.php
 Secure password hashing and cryptographic functionality:
 
 ```php
-use Nazim\Support\Hash;
+use Scriptmancer\Support\Hash;
 
 // Hash a password
 $hashed = Hash::make('my-password');
@@ -222,7 +224,7 @@ php run-hash-example.php
 In addition to basic hashing, the Hash class also provides OpenSSL encryption capabilities:
 
 ```php
-use Nazim\Support\Hash;
+use Scriptmancer\Support\Hash;
 
 // Encrypt and decrypt data
 $key = Hash::generateKey(); // Generate a secure key
@@ -247,7 +249,7 @@ $fileHash = Hash::file('/path/to/file', 'sha256');
 The Pipeline pattern allows you to pass an object through a series of stages or transformations:
 
 ```php
-use Nazim\Support\Pipeline;
+use Scriptmancer\Support\Pipeline;
 
 // Basic pipeline with closures
 $result = Pipeline::make('Hello')
@@ -312,7 +314,7 @@ Work with dates in an immutable way using DateObject:
 
 ```php
 // Create a date object
-$date = new \Nazim\Support\DateObject();
+$date = new \Scriptmancer\Support\DateObject();
 // Or use the helper function
 $date = date_obj();
 $specificDate = date_obj('2023-01-15');
@@ -326,8 +328,8 @@ $isWeekend = $date->isWeekend();
 $isBetween = $date->isBetween($start, $end);
 
 // Static creation methods
-$today = \Nazim\Support\DateObject::today();
-$yesterday = \Nazim\Support\DateObject::yesterday();
+$today = \Scriptmancer\Support\DateObject::today();
+$yesterday = \Scriptmancer\Support\DateObject::yesterday();
 ```
 
 ### String Manipulation
@@ -336,11 +338,11 @@ Fluent string manipulation with the Stringable class:
 
 ```php
 // Create a string object
-$string = new \Nazim\Support\Stringable('Hello, World!');
+$string = new \Scriptmancer\Support\Stringable('Hello, World!');
 // Or use the helper function
 $string = str('Hello, World!');
 // Or use the static method
-$string = \Nazim\Support\Stringable::of('Hello, World!');
+$string = \Scriptmancer\Support\Stringable::of('Hello, World!');
 
 // Method chaining
 $result = str('  HELLO, WORLD!  ')
@@ -366,7 +368,7 @@ $endsWith = str('Hello, World!')->endsWith('!'); // true
 A comprehensive set of array manipulation utilities:
 
 ```php
-use Nazim\Support\Arr;
+use Scriptmancer\Support\Arr;
 
 // Getting and setting values
 $value = Arr::get($array, 'key', 'default');
@@ -416,13 +418,59 @@ $months = [
 $sortedMonths = Arr::string_sort_by_key($months, 'tr_TR');
 ```
 
+### Color Utilities
+
+Manipulate and convert colors with the `Color` utility class:
+
+```php
+use Scriptmancer\Support\Color;
+
+// Expand short hex
+Color::expandHex('#3aF'); // '33aaFF'
+
+// Convert to RGB/RGBA strings
+Color::toRgbString('#3498db'); // 'rgb(52, 152, 219)'
+Color::toRgbaString('#3498db'); // 'rgba(52, 152, 219, 0)'
+
+// Convert to HSL/HSLA strings
+Color::toHslString('rgb(52,152,219)');
+Color::toHslaString('rgb(52,152,219)');
+
+// Lighten/Darken
+Color::lighten('#3498db', 0.2); // Lighten 20%
+Color::darken('#3498db', 0.2); // Darken 20%
+
+// Invert
+Color::invert('#3498db');
+
+// Blend two colors
+Color::blend('#3498db', '#e74c3c', 0.5);
+
+// Get best contrast color (black/white)
+Color::getContrastColor('#222'); // '#FFFFFF'
+
+// Generate a random color
+Color::random();
+
+// Convert between formats
+Color::toHex('rgb(52,152,219)');
+Color::toRgb('#3498db');
+Color::toHsl('#3498db');
+```
+
+Run the color example to see these features:
+
+```bash
+php run-color-example.php
+```
+
 ### Number Formatting
 
 Format numbers with proper locale-specific formatting:
 
 ```php
 // Create a number formatter
-$number = new \Nazim\Support\Number('tr_TR');
+$number = new \Scriptmancer\Support\Number('tr_TR');
 // Or use the helper function
 $number = number();
 // Or specify a different locale
@@ -466,7 +514,7 @@ echo Number::isOdd(43); // true
 
 ## Requirements
 
-- PHP 7.4 or higher
+- PHP 8.2 or higher
 - Kint (automatically required through Composer)
 - PHP Intl extension (for locale-specific string sorting and number formatting)
 

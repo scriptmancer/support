@@ -1,6 +1,6 @@
 <?php
 
-namespace Nazim\Support;
+namespace Scriptmancer\Support;
 
 class Hash
 {

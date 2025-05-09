@@ -1,6 +1,6 @@
 <?php
 
-namespace Nazim\Support;
+namespace Scriptmancer\Support;
 
 class Arr
 {
@@ -145,33 +145,6 @@ class Arr
     public static function unique(array $array): array
     {
         return array_unique($array);
-    }
-    
-    /**
-     * Get a random value from an array.
-     *
-     * @param array $array
-     * @return mixed
-     */
-    public static function random(array $array)
-    {
-        return $array[array_rand($array)];
-    }
-    
-    /**
-     * Get multiple random values from an array.
-     *
-     * @param array $array
-     * @param int $number
-     * @return array
-     */
-    public static function randomValues(array $array, int $number): array
-    {
-        $keys = array_rand($array, min($number, count($array)));
-        
-        return array_map(function ($key) use ($array) {
-            return $array[$key];
-        }, (array) $keys);
     }
     
     /**
@@ -395,7 +368,280 @@ class Arr
         if (is_null($value)) {
             return [];
         }
-        
         return is_array($value) ? $value : [$value];
     }
+ 
+    /**
+     * Flatten a multi-dimensional array into a single level.
+     * @param array $array
+     * @param int|float $depth
+     * @return array
+     */
+    public static function flatten(array $array, int|float $depth = INF): array
+    {
+        $result = [];
+        foreach ($array as $item) {
+            if (!is_array($item)) {
+                $result[] = $item;
+            } elseif ($depth === 1) {
+                $result = array_merge($result, $item);
+            } else {
+                $result = array_merge($result, self::flatten($item, is_infinite($depth) ? $depth : $depth - 1));
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Convert a multi-dimensional associative array to dot notation.
+     * @param array $array
+     * @param string $prepend
+     * @return array
+     */
+    public static function dot(array $array, string $prepend = ''): array
+    {
+        $results = [];
+        foreach ($array as $key => $value) {
+            if (is_array($value) && !empty($value)) {
+                $results += self::dot($value, $prepend.$key.'.');
+            } else {
+                $results[$prepend.$key] = $value;
+            }
+        }
+        return $results;
+    }
+
+    /**
+     * Convert a dot notation array into a multi-dimensional associative array.
+     * @param array $array
+     * @return array
+     */
+    public static function undot(array $array): array
+    {
+        $result = [];
+        foreach ($array as $key => $value) {
+            self::setDot($result, $key, $value);
+        }
+        return $result;
+    }
+
+    protected static function setDot(array &$array, string $key, $value): void
+    {
+        $keys = explode('.', $key);
+        while (count($keys) > 1) {
+            $k = array_shift($keys);
+            if (!isset($array[$k]) || !is_array($array[$k])) {
+                $array[$k] = [];
+            }
+            $array = &$array[$k];
+        }
+        $array[array_shift($keys)] = $value;
+    }
+
+    /**
+     * Pluck an array of values for a given key from an array.
+     * @param array $array
+     * @param string $key
+     * @return array
+     */
+    public static function pluck(array $array, string $key): array
+    {
+        $results = [];
+        foreach ($array as $item) {
+            if (is_array($item) && array_key_exists($key, $item)) {
+                $results[] = $item[$key];
+            } elseif (is_object($item) && isset($item->$key)) {
+                $results[] = $item->$key;
+            }
+        }
+        return $results;
+    }
+
+    /**
+     * Return all items except for the specified keys.
+     * @param array $array
+     * @param array|string $keys
+     * @return array
+     */
+    public static function except(array $array, $keys): array
+    {
+        $keys = (array)$keys;
+        return array_diff_key($array, array_flip($keys));
+    }
+
+    /**
+     * Return only the specified keys from the array.
+     * @param array $array
+     * @param array|string $keys
+     * @return array
+     */
+    public static function only(array $array, $keys): array
+    {
+        $keys = (array)$keys;
+        return array_intersect_key($array, array_flip($keys));
+    }
+
+    /**
+     * Remove a key (or nested key) from an array.
+     * @param array $array
+     * @param string $key
+     * @return array
+     */
+    public static function forget(array $array, string $key): array
+    {
+        $keys = explode('.', $key);
+        $ref = &$array;
+        while (count($keys) > 1) {
+            $k = array_shift($keys);
+            if (!isset($ref[$k]) || !is_array($ref[$k])) {
+                return $array;
+            }
+            $ref = &$ref[$k];
+        }
+        unset($ref[array_shift($keys)]);
+        return $array;
+    }
+
+    /**
+     * Get a value and remove it from the array.
+     * @param array $array
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public static function pull(array &$array, string $key, $default = null): mixed
+    {
+        $value = $array[$key] ?? $default;
+        unset($array[$key]);
+        return $value;
+    }
+
+    /**
+     * Get one or more random values from the array.
+     * @param array $array
+     * @param int $number
+     * @return mixed
+     */
+    public static function random(array $array, int $number = 1): mixed
+    {
+        $keys = array_rand($array, $number);
+        if ($number === 1) return $array[$keys];
+        return array_intersect_key($array, array_flip($keys));
+    }
+
+    /**
+     * Shuffle the array.
+     * @param array $array
+     * @return array
+     */
+    public static function shuffle(array $array): array
+    {
+        shuffle($array);
+        return $array;
+    }
+
+    /**
+     * Check if the array is associative.
+     * @param array $array
+     * @return bool
+     */
+    public static function isAssoc(array $array): bool
+    {
+        $keys = array_keys($array);
+        return array_keys($keys) !== $keys;
+    }
+
+    /**
+     * Collapse an array of arrays into a single array.
+     * @param array $array
+     * @return array
+     */
+    public static function collapse(array $array): array
+    {
+        $results = [];
+        foreach ($array as $values) {
+            if (is_array($values)) {
+                $results = array_merge($results, $values);
+            }
+        }
+        return $results;
+    }
+
+    /**
+     * Partition the array into two arrays by a callback.
+     * @param array $array
+     * @param callable $callback
+     * @return array
+     */
+    public static function partition(array $array, callable $callback): array
+    {
+        $truthy = $falsy = [];
+        foreach ($array as $key => $item) {
+            if ($callback($item, $key)) {
+                $truthy[$key] = $item;
+            } else {
+                $falsy[$key] = $item;
+            }
+        }
+        return [$truthy, $falsy];
+    }
+
+    /**
+     * Filter array by a callback (preserve keys).
+     * @param array $array
+     * @param callable $callback
+     * @return array
+     */
+    public static function where(array $array, callable $callback): array
+    {
+        return array_filter($array, $callback, ARRAY_FILTER_USE_BOTH);
+    }
+
+
+    /**
+     * Sort array by callback.
+     * @param array $array
+     * @param callable $callback
+     * @return array
+     */
+    public static function sortBy(array $array, callable $callback): array
+    {
+        uasort($array, function($a, $b) use ($callback) {
+            return $callback($a, $b);
+        });
+        return $array;
+    }
+
+    /**
+     * Check if any of the given keys exist in the array.
+     * @param array $array
+     * @param array $keys
+     * @return bool
+     */
+    public static function hasAny(array $array, array $keys): bool
+    {
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $array)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if all of the given keys exist in the array.
+     * @param array $array
+     * @param array $keys
+     * @return bool
+     */
+    public static function hasAll(array $array, array $keys): bool
+    {
+        foreach ($keys as $key) {
+            if (!array_key_exists($key, $array)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Nazim\Support\Stringable;
+use Scriptmancer\Support\Stringable;
 
 // Different ways to create Stringable instances
 echo "=== Creating Stringable Objects ===\n";

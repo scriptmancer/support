@@ -1,15 +1,15 @@
 <?php
 
-namespace Nazim\Support\Debug;
+namespace Scriptmancer\Debug;
 
-use Nazim\Support\Collections\Collection;
+use Scriptmancer\Collections\Collection;
 
 class CollectionDebugger
 {
     /**
      * Create a new collection debugger instance.
      *
-     * @param  \Nazim\Support\Collections\Collection  $collection  The collection instance.
+     * @param  \Scriptmancer\Collections\Collection  $collection  The collection instance.
      */
     public function __construct(
         protected Collection $collection
@@ -19,7 +19,7 @@ class CollectionDebugger
     /**
      * Dump the collection and continue execution.
      *
-     * @return \Nazim\Support\Collections\Collection
+     * @return \Scriptmancer\Collections\Collection
      */
     public function dump(): Collection
     {
@@ -42,7 +42,7 @@ class CollectionDebugger
      * Dump the collection as JSON and continue execution.
      *
      * @param int $options
-     * @return \Nazim\Support\Collections\Collection
+     * @return \Scriptmancer\Collections\Collection
      */
     public function dumpJson(int $options = 0): Collection
     {
@@ -54,7 +54,7 @@ class CollectionDebugger
     /**
      * Print a visual representation of the collection.
      *
-     * @return \Nazim\Support\Collections\Collection
+     * @return \Scriptmancer\Collections\Collection
      */
     public function table(): Collection
     {
@@ -206,7 +206,7 @@ class CollectionDebugger
     /**
      * Print statistics about the collection.
      *
-     * @return \Nazim\Support\Collections\Collection
+     * @return \Scriptmancer\Collections\Collection
      */
     public function stats(): Collection
     {

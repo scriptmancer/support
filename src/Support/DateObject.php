@@ -1,7 +1,7 @@
 <?php
 
-namespace Nazim\Support;
-use Nazim\Support\Date;
+namespace Scriptmancer\Support;
+use Scriptmancer\Support\Date;
 
 class DateObject
 {

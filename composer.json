@@ -1,6 +1,6 @@
 {
     "name": "scriptmancer/support",
-    "description": "Support package for Nazim framework",
+    "description": "Collection of useful classes and functions",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -15,9 +15,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Nazim\\Support\\": "src/Support/",
-            "Nazim\\Support\\Collections\\": "src/Collections/",
-            "Nazim\\Support\\Debug\\": "src/Debug/"
+            "Scriptmancer\\Support\\": "src/Support",
+            "Scriptmancer\\Collections\\": "src/Collections",
+            "Scriptmancer\\Debug\\": "src/Debug"
         },
         "files": [
             "src/helpers.php"

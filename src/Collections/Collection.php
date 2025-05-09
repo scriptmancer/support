@@ -1,14 +1,14 @@
 <?php
 
-namespace Nazim\Support\Collections;
+namespace Scriptmancer\Collections;
 
 use ArrayAccess;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use ReturnTypeWillChange;
-use Nazim\Support\Debug\CollectionDebugger;
-use Nazim\Support\Arr;
+use Scriptmancer\Debug\CollectionDebugger;
+use Scriptmancer\Support\Arr;
 
 class Collection implements ArrayAccess, Countable, IteratorAggregate
 {
@@ -1256,7 +1256,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Get a debugger for the collection.
      *
-     * @return \Nazim\Support\Debug\CollectionDebugger
+     * @return \Scriptmancer\Debug\CollectionDebugger
      */
     public function debug(): CollectionDebugger
     {

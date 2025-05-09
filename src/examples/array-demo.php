@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Nazim\Support\Arr;
+use Scriptmancer\Support\Arr;
 
 // Basic array operations
 echo "=== Basic Array Operations ===\n";
@@ -86,7 +86,7 @@ echo "\n=== Random ===\n";
 $deck = ['Ace', 'King', 'Queen', 'Jack', '10', '9', '8', '7'];
 echo "Deck: " . implode(', ', $deck) . "\n";
 echo "Random card: " . Arr::random($deck) . "\n";
-echo "3 random cards: " . implode(', ', Arr::randomValues($deck, 3)) . "\n";
+echo "3 random cards: " . implode(', ', Arr::random($deck, 3)) . "\n";
 
 // Merge
 echo "\n=== Merge ===\n";
@@ -206,5 +206,75 @@ foreach ($sorted_months as $name => $number) {
     echo "  $name: $number\n";
 }
 
-// Done
-echo "\n=== Test Complete ===\n"; 
+// Additional Arr utility examples
+
+echo "\n=== Arr Utility Extensions ===\n";
+
+// flatten
+$multi = [1, [2, [3, 4]], 5];
+echo "Flatten: " . implode(', ', Arr::flatten($multi)) . "\n";
+
+// dot/undot
+$assoc = ['a' => ['b' => ['c' => 1]], 'x' => 2];
+$dotted = Arr::dot($assoc);
+echo "Dot: "; print_r($dotted);
+$undotted = Arr::undot($dotted);
+echo "Undot: "; print_r($undotted);
+
+// pluck
+$people = [ ['name' => 'Alice'], ['name' => 'Bob'] ];
+echo "Pluck names: " . implode(', ', Arr::pluck($people, 'name')) . "\n";
+
+// except/only
+$assoc = ['a' => 1, 'b' => 2, 'c' => 3];
+echo "Except b: "; print_r(Arr::except($assoc, 'b'));
+echo "Only a,c: "; print_r(Arr::only($assoc, ['a', 'c']));
+
+// forget
+$nested = ['a' => ['b' => ['c' => 1]], 'x' => 2];
+echo "Forget a.b.c: "; print_r(Arr::forget($nested, 'a.b.c'));
+
+// pull
+$arr = ['foo' => 'bar', 'baz' => 'qux'];
+echo "Pull foo: " . Arr::pull($arr, 'foo') . ", Remaining: "; print_r($arr);
+
+// random (multi)
+$nums = range(1, 10);
+echo "Random 3: "; print_r(Arr::random($nums, 3));
+
+// shuffle
+$shuffled = Arr::shuffle($nums);
+echo "Shuffled: "; print_r($shuffled);
+
+// isAssoc
+$assoc = ['a' => 1, 'b' => 2]; $indexed = [1, 2];
+echo "isAssoc (assoc): ".(Arr::isAssoc($assoc)?'true':'false')."\n";
+echo "isAssoc (indexed): ".(Arr::isAssoc($indexed)?'true':'false')."\n";
+
+// collapse
+$toCollapse = [[1,2],[3,4],[5]];
+echo "Collapse: "; print_r(Arr::collapse($toCollapse));
+
+// partition
+$nums = [1,2,3,4,5];
+[$even, $odd] = Arr::partition($nums, fn($v)=>$v%2==0);
+echo "Partition even/odd: "; print_r([$even, $odd]);
+
+// where
+$filtered = Arr::where($assoc, fn($v, $k) => $v > 1);
+echo "Where >1: "; print_r($filtered);
+
+// sortBy
+$toSort = ['a' => 3, 'b' => 1, 'c' => 2];
+echo "SortBy value asc: "; print_r(Arr::sortBy($toSort, fn($a,$b)=>$a<=>$b));
+
+// hasAny/hasAll
+$keys = ['a','b','z'];
+echo "hasAny: ".(Arr::hasAny($assoc, $keys)?'true':'false')."\n";
+echo "hasAll: ".(Arr::hasAll($assoc, $keys)?'true':'false')."\n";
+
+// chunk
+$chunked = Arr::chunk($nums, 2);
+echo "Chunked (2): "; print_r($chunked);
+
+echo "\n=== Test Complete ===\n";
